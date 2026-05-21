@@ -19,14 +19,11 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
 
   const [user, setUser] = useState<User>(mockUser);
-
-  const [isProfileOpen, setIsProfileOpen] =
-    useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
 
   useEffect(() => {
     async function loadData() {
       const res = await getProcedures();
-
       setData(res as Procedure[]);
       setLoading(false);
     }
@@ -34,25 +31,20 @@ export default function DashboardPage() {
     loadData();
   }, []);
 
-  const totalProcedures = data.reduce(
+  const approved = data.filter((p) => p.status === "approved");
+  const rejected = data.filter((p) => p.status === "rejected");
+
+  const totalProcedures = approved.reduce(
     (acc, p) => acc + p.executions,
     0
   );
 
-  const rejected = data.filter(
-    (p) => p.status === "rejected"
-  );
-
-  const approved = data.filter(
-    (p) => p.status === "approved"
-  );
-
-  const totalRejectedValue = rejected.reduce(
+  const totalApprovedValue = approved.reduce(
     (acc, p) => acc + p.value * p.executions,
     0
   );
 
-  const totalApprovedValue = approved.reduce(
+  const totalRejectedValue = rejected.reduce(
     (acc, p) => acc + p.value * p.executions,
     0
   );
@@ -82,16 +74,14 @@ export default function DashboardPage() {
           totalRejectedValue={totalRejectedValue}
         />
 
+        {/* Top 5 procedimentos */}
         <TopProcedures data={data} />
 
         {/* Tabela */}
-        <ProceduresTable
-          data={data}
-          loading={loading}
-        />
+        <ProceduresTable data={data} loading={loading} />
       </div>
 
-      {/* Modal */}
+      {/* Modal perfil */}
       <ProfileForm
         open={isProfileOpen}
         onOpenChange={setIsProfileOpen}

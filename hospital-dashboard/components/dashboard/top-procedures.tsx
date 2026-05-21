@@ -14,7 +14,12 @@ type TopProceduresProps = {
 export function TopProcedures({
   data,
 }: TopProceduresProps) {
-  const top5 = [...data]
+
+  const approvedProcedures = data.filter(
+    (procedure) => procedure.status === "approved"
+  );
+
+  const top5 = [...approvedProcedures]
     .sort((a, b) => b.executions - a.executions)
     .slice(0, 5);
 
@@ -22,7 +27,7 @@ export function TopProcedures({
     <Card>
       <CardHeader>
         <CardTitle>
-          Top 5 Procedimentos
+          Top 5 procedimentos mais executados
         </CardTitle>
       </CardHeader>
 
@@ -44,7 +49,10 @@ export function TopProcedures({
               </div>
 
               <p className="font-semibold">
-                {procedure.value.toLocaleString(
+                {(
+                  procedure.value *
+                  procedure.executions
+                ).toLocaleString(
                   "pt-BR",
                   {
                     style: "currency",

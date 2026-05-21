@@ -22,7 +22,7 @@ export function MetricsCards({
     <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
       <Card>
         <CardHeader>
-          <CardTitle>Total de Procedimentos</CardTitle>
+          <CardTitle>Procedimentos <br/> executados</CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-2xl font-bold">{totalProcedures}</p>
@@ -31,7 +31,7 @@ export function MetricsCards({
 
       <Card>
         <CardHeader>
-          <CardTitle>Rejeitados</CardTitle>
+          <CardTitle>Prodecimentos <br/> rejeitados</CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-2xl font-bold">{totalRejected}</p>
